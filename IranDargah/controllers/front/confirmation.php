@@ -28,7 +28,7 @@ class IranDargahConfirmationModuleFrontController extends ModuleFrontController
             $order->save();
             $this->returnError($status);
         } else {
-            $api_key = Configuration::get('BAHAMTA_API_KEY');
+            $api_key = Configuration::get('IRANDARGAH_MERCHANT_CODE');
             $amount = $order->total_paid * (1 / $order->conversion_rate);
             $client = new SoapClient($this->soap_url, ['cache_wsdl' => WSDL_CACHE_NONE]);
             $res = $client->__soapCall('IRDVerification', [
