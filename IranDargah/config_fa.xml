@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>IranDargah</name>
+	<displayName><![CDATA[درگاه پرداخت ایران درگاه]]></displayName>
+	<version><![CDATA[1.0.0]]></version>
+	<description><![CDATA[پرداخت سریع و آسان با کارت های شتاب از طریق درگاه پرداخت ایران درگاه]]></description>
+	<author><![CDATA[IranDargah.com]]></author>
+	<tab><![CDATA[payments_gateways]]></tab>
+	<confirmUninstall><![CDATA[آیا مطمئن هستید که قصد حذف درگاه پرداخت ایران درگاه را دارید؟]]></confirmUninstall>
+	<is_configurable>1</is_configurable>
+	<need_instance>1</need_instance>
+	<limited_countries></limited_countries>
+</module>

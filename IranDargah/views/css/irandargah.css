@@ -1,0 +1,17 @@
+p.payment_module a.irandargah {
+    background: url('../img/irandargah.png') 99% 15px no-repeat #fbfbfb;
+}
+
+p.payment_module a.irandargah:after {
+    display: block;
+    content: "\f053";
+    position: absolute;
+    left: 15px;
+    margin-top: -11px;
+    top: 50%;
+    font-family: "FontAwesome";
+    font-size: 25px;
+    height: 22px;
+    width: 14px;
+    color: #777;
+}
