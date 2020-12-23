@@ -47,7 +47,7 @@ class IranDargahValidationModuleFrontController extends ModuleFrontController
             $customer->secure_key
         );
 
-        $amount = $cart->getOrderTotal(true, Cart::BOTH) * (1 / $currency->conversion_rate);
+        $amount = $cart->getOrderTotal(true, Cart::BOTH) * ($currency->iso_code = 'IRT' ? 10 : 1);
         $client = new SoapClient($this->soap_url, ['cache_wsdl' => WSDL_CACHE_NONE]);
         $res = $client->__soapCall('IRDPayment', [
             [
@@ -60,7 +60,7 @@ class IranDargahValidationModuleFrontController extends ModuleFrontController
         ]);
         if ($res) {
             if ($res->status == 200) {
-                header('Location: https://dargaah.com/ird/startpay/' . $res->authority);
+                Tools::redirect('https://dargaah.com/ird/startpay/' . $res->authority);
                 die();
             } else {
                 $this->returnError($res->status);

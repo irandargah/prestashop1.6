@@ -29,7 +29,8 @@ class IranDargahConfirmationModuleFrontController extends ModuleFrontController
             $this->returnError($status);
         } else {
             $api_key = Configuration::get('IRANDARGAH_MERCHANT_CODE');
-            $amount = $order->total_paid * (1 / $order->conversion_rate);
+            $current_currency = Currency::getDefaultCurrency();
+            $amount = $order->total_paid * ($current_currency->iso_code == 'IRT' ? 10 : 1);
             $client = new SoapClient($this->soap_url, ['cache_wsdl' => WSDL_CACHE_NONE]);
             $res = $client->__soapCall('IRDVerification', [
                 [
