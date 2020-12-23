@@ -38,7 +38,7 @@ class IranDargah extends PaymentModule
         );
 
         $this->order_states = array(
-            'PS_OS_IRANDARGAH_PENDING' => $this->l('IranDargah Pending Payment'),
+            'PS_OS_IRANDARGAH_PENDING' => $this->l('در انتظار پرداخت'),
         );
 
         parent::__construct();
@@ -82,7 +82,7 @@ class IranDargah extends PaymentModule
             $order_state->hidden = false;
             $order_state->paid = false;
             $order_state->deleted = false;
-            $order_state->name = array((int) Configuration::get('PS_LANG_DEFAULT') => pSQL($this->l('IranDargah Pending Payment')));
+            $order_state->name = array((int) Configuration::get('PS_LANG_DEFAULT') => pSQL($this->l('در انتظار پرداخت')));
             if ($order_state->add()) {
                 Configuration::updateValue('PS_OS_IRANDARGAH_PENDING', $order_state->id);
                 copy(dirname(__FILE__) . '/logo.gif', dirname(__FILE__) . '/../../img/os/' . $order_state->id . '.gif');
