@@ -7,7 +7,7 @@
 
 **از لینک زیر آخرین نسخه ماژول را دانلود کنید**
 
-[دانلود](https://github.com/irandargah/prestashopPaymentPlugin/releases)
+[دانلود](https://github.com/irandargah/prestashop1.6/releases/latest)
 
 </div>
 
