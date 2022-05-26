@@ -3,7 +3,6 @@
 class IranDargahConfirmationModuleFrontController extends ModuleFrontController
 {
     private $redirect_order_id = null;
-    private $soap_url = "https://dargaah.com/wsdl";
 
     public function postProcess()
     {
@@ -24,22 +23,22 @@ class IranDargahConfirmationModuleFrontController extends ModuleFrontController
 
         $status = Tools::getValue('code');
         if ($status != 100) {
-            $order->setCurrentState(Configuration::get('PS_OS_ERROR'));
+            $order->setCurrentState(Configuration::get('PS_OS_CANCELED'));
             $order->save();
             $this->returnError($status);
         } else {
             $api_key = Configuration::get('IRANDARGAH_MERCHANT_CODE');
             $current_currency = Currency::getDefaultCurrency();
             $amount = $order->total_paid * ($current_currency->iso_code == 'IRT' ? 10 : 1);
-            $client = new SoapClient($this->soap_url, ['cache_wsdl' => WSDL_CACHE_NONE]);
-            $res = $client->__soapCall('IRDVerification', [
-                [
-                    'merchantID' => $api_key,
-                    'authority' => $_POST['authority'],
-                    'amount' => $amount,
-                    'orderId' => $_POST['orderId'],
-                ],
-            ]);
+
+            $data = [
+                'merchantID' => $api_key,
+                'amount' => (int) $amount,
+                'authority' => $_POST['authority'],
+                'orderId' => $_POST['orderId'],
+            ];
+
+            $res = $this->sendToIrandargah($data);
             if ($res) {
                 if ($res->status == 100) {
                     $order->setCurrentState(Configuration::get('PS_OS_PAYMENT'));
@@ -78,5 +77,20 @@ class IranDargahConfirmationModuleFrontController extends ModuleFrontController
         $return_url .= "&id_order={$this->redirect_order_id}";
         header('Location: ' . $return_url);
         exit;
+    }
+
+    public function sendToIrandargah($data)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://dargaah.com/verification');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        $response  = curl_exec($ch);
+        curl_close($ch);
+        return json_decode($response);
     }
 }

@@ -37,7 +37,7 @@
 
 		<p class="cart_navigation clearfix" id="cart_navigation">
 			<a class="button-exclusive btn btn-default" href="{$link->getPageLink('order', true, NULL, "step=3")|escape:'html':'UTF-8'}">
-				<i class="icon-chevron-left"></i>{l s='روش های پرداخت دیگر' mod='IranDargah'}
+				<i class="icon-chevron-left"></i>{l s='روش‌های پرداخت دیگر' mod='IranDargah'}
 			</a>
 			<button class="button btn btn-default button-medium" type="submit">
 				<span>{l s='تایید و پرداخت' mod='IranDargah'}<i class="icon-chevron-right right"></i></span>

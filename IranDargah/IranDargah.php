@@ -11,7 +11,7 @@ class IranDargah extends PaymentModule
     {
         $this->name = 'IranDargah';
         $this->tab = 'payments_gateways';
-        $this->version = '2.0.0';
+        $this->version = '2.0.1';
         $this->author = 'IranDargah.com';
         $this->author = $this->l('IranDargah.com');
         $this->need_instance = 1;
@@ -82,11 +82,11 @@ class IranDargah extends PaymentModule
             $order_state->hidden = false;
             $order_state->paid = false;
             $order_state->deleted = false;
-            $order_state->name = array((int) Configuration::get('PS_LANG_DEFAULT') => pSQL($this->l('در انتظار پرداخت')));
+            $order_state->name = array((int) Configuration::get('PS_LANG_DEFAULT') => pSQL($this->l('Pending Payment')));
             if ($order_state->add()) {
                 Configuration::updateValue('PS_OS_IRANDARGAH_PENDING', $order_state->id);
-                copy(dirname(__FILE__) . '/logo.gif', dirname(__FILE__) . '/../../img/os/' . $order_state->id . '.gif');
-                copy(dirname(__FILE__) . '/logo.gif', dirname(__FILE__) . '/../../img/tmp/order_state_mini_' . $order_state->id . '.gif');
+                copy(dirname(__FILE__) . '/logo.png', dirname(__FILE__) . '/../../img/os/' . $order_state->id . '.png');
+                copy(dirname(__FILE__) . '/logo.png', dirname(__FILE__) . '/../../img/tmp/order_state_mini_' . $order_state->id . '.png');
             } else {
                 return false;
             }
@@ -115,7 +115,7 @@ class IranDargah extends PaymentModule
 
     public function uninstall()
     {
-        if (!parent::uninstall() || !Configuration::deleteByName('IRANDARGAH_MERCHANT_CODE') || !Configuration::deleteByName('BAHAMTA_TEST_MODE')) {
+        if (!parent::uninstall() || !Configuration::deleteByName('IRANDARGAH_MERCHANT_CODE')) {
             return false;
         }
 
@@ -233,6 +233,5 @@ class IranDargah extends PaymentModule
         } else {
             return $error_key;
         }
-
     }
 }
